@@ -53,6 +53,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
+        // $category = new CategoryResource(Category::where ('category_id',category->id)->first());
+
 
         $category=Category::find($id);
         if($category){
@@ -82,7 +84,7 @@ class CategoryController extends Controller
         if($validator->fails()){
             return $this->apiResponse(null,$validator->errors(),400);
         }
-        $category=Category::find($id);
+        $category=Category::findOrFail($id);
         if(!$category){
             return $this->apiResponse(null,'This Category Not Found',404);
         }
@@ -96,7 +98,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category=Category::find($id);
+        $category=Category::findOrFail($id);
         if(!$category){
             return $this->apiResponse(null,'This Category Not Found',404);
         }

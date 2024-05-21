@@ -19,7 +19,10 @@ class CategoryResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'posts'=> $this->posts,
-            // 'posts'=> PostResource::collection($this->posts),
+            
+            // 'posts'=> $this->posts()->title,
+            // 'posts'=>new PostResource(PostResource::collection($this->posts)),
+            // 'posts'=> PostResource::collection($this->title),
             // 'posts' => PostResource::collection($this->whenLoaded('posts'))
         ];
 

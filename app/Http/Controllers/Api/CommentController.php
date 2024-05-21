@@ -15,7 +15,7 @@ class CommentController extends Controller
     use ApiResponseTrait;
     public function create($post_id,Request $request){
 
-    $post =Post::where('id',$post_id)->first();
+    $post =Post::where('id',$post_id)->get();
     if($post){
         $validator= Validator::make($request->all(),[
         'message' => 'required',]);
@@ -26,7 +26,7 @@ class CommentController extends Controller
             'post_id' =>$post->id,
             'user_id' =>$request->user()->id,
         ]);
-        $comment->load('user');
+        // $comment->load('user');
         return $this->apiResponse($comment,'This Comment Save',201);
     }
     else{
@@ -35,11 +35,11 @@ class CommentController extends Controller
 }
     public function list($post_id,Request $request){
 
-    $post =Post::where('id',$post_id)->first();
+    $post =Post::where('id',$post_id)->get();
     if($post){
 
         $comment =Comment::where('post_id',$post_id)->get();
-        $comment->load('user');
+        // $comment->load('user');
         return $this->apiResponse($comment,'Comment Successfuly fetched',200);
     }
     else{
@@ -47,8 +47,9 @@ class CommentController extends Controller
 
 }
     public function update($comment_id,Request $request){
-        $comment =Comment::with(['user'])->where('id',$comment_id)->first();
-        $comment->load('user');
+        $comment =Comment::where('id',$comment_id)->get();
+        // $comment =Comment::with(['user'])->where('id',$comment_id)->first();
+        // $comment->load('user');
         if($comment){
             if($comment->user_id == $request->user()->id){
                 $validator= Validator::make($request->all(),[
@@ -75,8 +76,8 @@ class CommentController extends Controller
 
     }
     public function delete($comment_id,Request $request){
-        $comment =Comment::where('id',$comment_id)->first();
-        $comment->load('user');
+        $comment =Comment::where('id',$comment_id)->get();
+        // $comment->load('user');
         if($comment){
             if($comment->user_id == $request->user()->id){
 
